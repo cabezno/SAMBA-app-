@@ -178,8 +178,8 @@ class _ConnectScreenState extends State<ConnectScreen> {
         ),
       ),
     );
-    if (barcode != null && barcode.barcode.rawValue != null) {
-      final raw = barcode.barcode.rawValue!;
+    if (barcode != null && barcode.barcodes.isNotEmpty && barcode.barcodes.first.rawValue != null) {
+      final raw = barcode.barcodes.first.rawValue!;
       // QR format: "SAMBA:192.168.1.100" or just "192.168.1.100"
       final ip = raw.startsWith('SAMBA:') ? raw.substring(6) : raw;
       if (RegExp(r'^\d+\.\d+\.\d+\.\d+$').hasMatch(ip)) {
