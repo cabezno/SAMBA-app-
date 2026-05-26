@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Allow cleartext HTTP to local network for VortexEngine connection -->
+<!-- Allow cleartext HTTP to local network for SAMBA Engine connection -->
 <network-security-config>
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">192.168.0.0/16</domain>

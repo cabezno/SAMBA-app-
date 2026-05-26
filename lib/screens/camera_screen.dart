@@ -7,7 +7,7 @@ import '../services/camera_service.dart';
 
 // =============================================================================
 // CameraScreen — live camera preview + controls
-// Shown when connected to VortexEngine
+// Shown when connected to SAMBA Engine
 // =============================================================================
 
 class CameraScreen extends StatefulWidget {

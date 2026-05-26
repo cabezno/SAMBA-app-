@@ -19,7 +19,7 @@ dependencies:
   # State management
   provider: ^6.1.2
 
-  # Network discovery (find VortexEngine on LAN)
+  # Network discovery (find SAMBA Engine on LAN)
   multicast_dns: ^0.3.2+5
 
   # Settings persistence
