@@ -73,7 +73,7 @@ class _CameraScreenState extends State<CameraScreen> {
                 _renderer,
                 key: ValueKey(orientation),
                 objectFit: RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,
-                mirror: cam.facing == CameraFacing.front,
+                mirror: cam.facing == CamFacing.front,
               ),
 
               // ---- ON AIR indicator ----

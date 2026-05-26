@@ -5,18 +5,20 @@ import 'package:flutter_webrtc/flutter_webrtc.dart';
 // CameraService — manages device camera and MediaStream for WebRTC
 // =============================================================================
 
+enum CamFacing { back, front }
+
 enum CameraResolution { r720p, r1080p, r4k }
 
 class CameraService extends ChangeNotifier {
   MediaStream?     _stream;
-  CameraFacing     _facing     = CameraFacing.back;
+  CamFacing        _facing     = CamFacing.back;
   CameraResolution _resolution = CameraResolution.r720p;
   bool             _torchOn    = false;
   bool             _initialized = false;
 
   MediaStream?     get stream       => _stream;
   bool             get isInitialized => _initialized;
-  CameraFacing     get facing       => _facing;
+  CamFacing        get facing       => _facing;
   CameraResolution get resolution   => _resolution;
   bool             get torchOn      => _torchOn;
 
@@ -37,7 +39,7 @@ class CameraService extends ChangeNotifier {
         'autoGainControl': true,
       },
       'video': {
-        'facingMode': _facing == CameraFacing.back ? 'environment' : 'user',
+        'facingMode': _facing == CamFacing.back ? 'environment' : 'user',
         // Use min+ideal so the camera HAL captures at exactly the requested resolution.
         // A bare integer is treated as "ideal" only — the Android capturer may start
         // at a lower resolution (e.g. 320x192) and the WebRTC quality scaler never
@@ -54,7 +56,7 @@ class CameraService extends ChangeNotifier {
 
   // ---- Flip camera ----
   Future<void> flipCamera() async {
-    _facing = _facing == CameraFacing.back ? CameraFacing.front : CameraFacing.back;
+    _facing = _facing == CamFacing.back ? CamFacing.front : CamFacing.back;
     await _buildStream();
     notifyListeners();
   }
