@@ -83,7 +83,7 @@ class _ConnectScreenState extends State<ConnectScreen> {
                     style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.w600)),
               ]),
               const SizedBox(height: 4),
-              const Text('Connect to VortexEngine',
+              const Text('Connect to SAMBA Engine',
                   style: TextStyle(color: Colors.white54, fontSize: 13)),
               const SizedBox(height: 40),
 
@@ -100,7 +100,7 @@ class _ConnectScreenState extends State<ConnectScreen> {
               // Source ID
               _field('Source ID', _idCtrl,
                   hint: 'cam1',
-                  helper: 'Must match source slot in VortexEngine'),
+                  helper: 'Must match source slot in SAMBA Engine'),
               const SizedBox(height: 40),
 
               // Connect button
@@ -140,7 +140,7 @@ class _ConnectScreenState extends State<ConnectScreen> {
               // Hint
               const Center(
                 child: Text(
-                  'Make sure VortexEngine is running on the same network',
+                  'Make sure SAMBA Engine is running on the same network',
                   textAlign: TextAlign.center,
                   style: TextStyle(color: Colors.white24, fontSize: 11),
                 ),

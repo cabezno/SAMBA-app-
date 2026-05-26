@@ -1,24 +1,24 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
 
+enum CamFacing { back, front }
+
 // =============================================================================
 // CameraService — manages device camera and MediaStream for WebRTC
 // =============================================================================
-
-enum CamFacing { back, front }
 
 enum CameraResolution { r720p, r1080p, r4k }
 
 class CameraService extends ChangeNotifier {
   MediaStream?     _stream;
-  CamFacing        _facing     = CamFacing.back;
+  CamFacing     _facing     = CamFacing.back;
   CameraResolution _resolution = CameraResolution.r720p;
   bool             _torchOn    = false;
   bool             _initialized = false;
 
   MediaStream?     get stream       => _stream;
   bool             get isInitialized => _initialized;
-  CamFacing        get facing       => _facing;
+  CamFacing     get facing       => _facing;
   CameraResolution get resolution   => _resolution;
   bool             get torchOn      => _torchOn;
 
