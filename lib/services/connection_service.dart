@@ -155,16 +155,16 @@ class ConnectionService extends ChangeNotifier {
     );
 
     // ICE connection state monitoring
-    _peerConnection!.onIceCamConnState = (state) {
+    _peerConnection!.onIceConnectionState = (state) {
       debugPrint('[CameraSAMBA] ICE: $state');
-      if (state == RTCIceCamConnState.RTCIceConnectionStateConnected ||
-          state == RTCIceCamConnState.RTCIceConnectionStateCompleted) {
+      if (state == RTCIceConnectionState.RTCIceConnectionStateConnected ||
+          state == RTCIceConnectionState.RTCIceConnectionStateCompleted) {
         _state = CamConnState.connected;
         notifyListeners();
         _startStats();
         _startHeartbeat();
-      } else if (state == RTCIceCamConnState.RTCIceConnectionStateFailed ||
-                 state == RTCIceCamConnState.RTCIceConnectionStateDisconnected) {
+      } else if (state == RTCIceConnectionState.RTCIceConnectionStateFailed ||
+                 state == RTCIceConnectionState.RTCIceConnectionStateDisconnected) {
         _state = CamConnState.error;
         _errorMessage = 'WebRTC connection lost (ICE $state)';
         notifyListeners();
