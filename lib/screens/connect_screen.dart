@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:mobile_scanner/mobile_scanner.dart';
 import '../services/connection_service.dart';
 import '../services/camera_service.dart';
 
@@ -91,6 +92,17 @@ class _ConnectScreenState extends State<ConnectScreen> {
               _field('Engine IP Address', _ipCtrl,
                   hint: '192.168.1.100',
                   keyboard: TextInputType.number),
+              const SizedBox(height: 8),
+
+              // QR scan button
+              Center(
+                child: TextButton.icon(
+                  onPressed: _scanQR,
+                  icon: const Icon(Icons.qr_code_scanner, color: Color(0xFF00BBDD)),
+                  label: const Text('Scan QR Code',
+                      style: TextStyle(color: Color(0xFF00BBDD))),
+                ),
+              ),
               const SizedBox(height: 16),
 
               // Source name
@@ -150,6 +162,30 @@ class _ConnectScreenState extends State<ConnectScreen> {
         ),
       ),
     );
+  }
+
+  // ---- QR Scanner ----
+  Future<void> _scanQR() async {
+    final barcode = await Navigator.push<BarcodeCapture>(
+      context,
+      MaterialPageRoute(
+        builder: (_) => Scaffold(
+          backgroundColor: Colors.black,
+          appBar: AppBar(title: const Text('Scan QR Code')),
+          body: MobileScanner(
+            onDetect: (capture) => Navigator.pop(context, capture),
+          ),
+        ),
+      ),
+    );
+    if (barcode != null && barcode.barcode.rawValue != null) {
+      final raw = barcode.barcode.rawValue!;
+      // QR format: "SAMBA:192.168.1.100" or just "192.168.1.100"
+      final ip = raw.startsWith('SAMBA:') ? raw.substring(6) : raw;
+      if (RegExp(r'^\d+\.\d+\.\d+\.\d+$').hasMatch(ip)) {
+        _ipCtrl.text = ip;
+      }
+    }
   }
 
   Widget _field(String label, TextEditingController ctrl,

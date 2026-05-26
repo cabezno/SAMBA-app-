@@ -13,6 +13,9 @@ dependencies:
   # WebRTC — for WHIP protocol (phone → SAMBA Engine)
   flutter_webrtc: ^0.10.6
 
+  # QR code scanning for auto-connect
+  mobile_scanner: ^6.0.0
+
   # HTTP — for WHIP signaling POST
   http: ^1.2.0
 
