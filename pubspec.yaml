@@ -10,10 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  # Camera
-  camera: ^0.11.0
-
-  # WebRTC — for WHIP protocol (phone → VortexEngine)
+  # WebRTC — for WHIP protocol (phone → SAMBA Engine)
   flutter_webrtc: ^0.10.6
 
   # HTTP — for WHIP signaling POST

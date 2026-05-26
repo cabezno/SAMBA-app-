@@ -48,7 +48,7 @@ class _ConnectScreenState extends State<ConnectScreen> {
 
     setState(() => _connecting = false);
 
-    if (conn.state == ConnectionState.error && mounted) {
+    if (conn.state == CamConnState.error && mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Connection failed: ${conn.errorMessage}'),
@@ -113,16 +113,16 @@ class _ConnectScreenState extends State<ConnectScreen> {
                     foregroundColor: Colors.black,
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                   ),
-                  onPressed: (_connecting || conn.state == ConnectionState.connecting)
+                  onPressed: (_connecting || conn.state == CamConnState.connecting)
                       ? null : _connect,
-                  child: _connecting || conn.state == ConnectionState.connecting
+                  child: _connecting || conn.state == CamConnState.connecting
                       ? const SizedBox(width: 20, height: 20,
                           child: CircularProgressIndicator(strokeWidth: 2, color: Colors.black))
                       : const Text('Connect', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
                 ),
               ),
 
-              if (conn.state == ConnectionState.error) ...[
+              if (conn.state == CamConnState.error) ...[
                 const SizedBox(height: 16),
                 Container(
                   padding: const EdgeInsets.all(12),

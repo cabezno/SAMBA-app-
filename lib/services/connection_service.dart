@@ -14,10 +14,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 //   Response: SDP answer
 // =============================================================================
 
-enum ConnectionState { disconnected, connecting, connected, error }
+enum CamConnState { disconnected, connecting, connected, error }
 
 class ConnectionService extends ChangeNotifier {
-  ConnectionState _state = ConnectionState.disconnected;
+  CamConnState _state = CamConnState.disconnected;
   String _engineIp       = '';
   String _sourceId       = 'cam1';
   String _sourceName     = 'Mobile Cam';
@@ -31,8 +31,8 @@ class ConnectionService extends ChangeNotifier {
   Timer?              _heartbeatTimer;
 
   // Getters
-  ConnectionState get state        => _state;
-  bool            get isConnected  => _state == ConnectionState.connected;
+  CamConnState get state        => _state;
+  bool            get isConnected  => _state == CamConnState.connected;
   String          get engineIp     => _engineIp;
   String          get sourceId     => _sourceId;
   String          get sourceName   => _sourceName;
@@ -67,7 +67,7 @@ class ConnectionService extends ChangeNotifier {
     _sourceId   = sourceId;
     _sourceName = sourceName;
     _localStream = stream;
-    _state      = ConnectionState.connecting;
+    _state      = CamConnState.connecting;
     _errorMessage = '';
     notifyListeners();
 
@@ -75,7 +75,7 @@ class ConnectionService extends ChangeNotifier {
       await _createPeerConnection(stream);
       await saveSettings();
     } catch (e) {
-      _state        = ConnectionState.error;
+      _state        = CamConnState.error;
       _errorMessage = e.toString();
       notifyListeners();
       debugPrint('[CameraSAMBA] Connection failed: $e');
@@ -155,17 +155,17 @@ class ConnectionService extends ChangeNotifier {
     );
 
     // ICE connection state monitoring
-    _peerConnection!.onIceConnectionState = (state) {
+    _peerConnection!.onIceCamConnState = (state) {
       debugPrint('[CameraSAMBA] ICE: $state');
-      if (state == RTCIceConnectionState.RTCIceConnectionStateConnected ||
-          state == RTCIceConnectionState.RTCIceConnectionStateCompleted) {
-        _state = ConnectionState.connected;
+      if (state == RTCIceCamConnState.RTCIceConnectionStateConnected ||
+          state == RTCIceCamConnState.RTCIceConnectionStateCompleted) {
+        _state = CamConnState.connected;
         notifyListeners();
         _startStats();
         _startHeartbeat();
-      } else if (state == RTCIceConnectionState.RTCIceConnectionStateFailed ||
-                 state == RTCIceConnectionState.RTCIceConnectionStateDisconnected) {
-        _state = ConnectionState.error;
+      } else if (state == RTCIceCamConnState.RTCIceConnectionStateFailed ||
+                 state == RTCIceCamConnState.RTCIceConnectionStateDisconnected) {
+        _state = CamConnState.error;
         _errorMessage = 'WebRTC connection lost (ICE $state)';
         notifyListeners();
       }
@@ -259,7 +259,7 @@ class ConnectionService extends ChangeNotifier {
     await _peerConnection?.close();
     _peerConnection = null;
     _localStream    = null;
-    _state          = ConnectionState.disconnected;
+    _state          = CamConnState.disconnected;
     _isOnAir        = false;
     notifyListeners();
 
